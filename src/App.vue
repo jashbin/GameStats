@@ -1,19 +1,21 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- Imgur -->
+    <b-container fluid class="p-0" style="height:500px; margin-top: 50px;">
+      <Imgur search="csgo" :heightImg="20" />
+    </b-container>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Imgur from "./components/Imgur.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    Imgur
   }
-}
+};
 </script>
 
 <style>
