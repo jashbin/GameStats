@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <TwitchTopGames :withAnimation="true" />
+
+    <TwitchTopGamesCard title="Nioh 2" url_img="https://static-cdn.jtvnw.net/ttv-boxart/sef.jpg" :card_width="148" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TwitchTopGames from './components/TwitchTopGames.vue'
+import TwitchTopGamesCard from './components/TwitchTopGamesCard.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    TwitchTopGames,
+    TwitchTopGamesCard
   }
 }
 </script>
