@@ -1,22 +1,33 @@
 <template>
   <div id="app">
-    <TwitchTopGames :withAnimation="true" />
-
-    <TwitchTopGamesCard title="Nioh 2" url_img="https://static-cdn.jtvnw.net/ttv-boxart/sef.jpg" :card_width="148" />
+    <div class>
+      <input v-model="research" placeholder="Search :" />
+      <button v-on:click="send()" type="button" name="button">Search</button>
+    </div>
+    <Twitch :withAnimation="true" :search="toSend" />
   </div>
 </template>
 
 <script>
-import TwitchTopGames from './components/TwitchTopGames.vue'
-import TwitchTopGamesCard from './components/TwitchTopGamesCard.vue'
+import Twitch from "./components/Twitch.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    TwitchTopGames,
-    TwitchTopGamesCard
+    Twitch
+  },
+  data() {
+    return {
+      research: "",
+      toSend: ""
+    };
+  },
+  methods: {
+    send() {
+      this.toSend = this.research;
+    }
   }
-}
+};
 </script>
 
 <style>
