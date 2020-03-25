@@ -1,5 +1,9 @@
 <template>
-  <b-container fluid class="p-0" style="background-color: #2e3136; min-height:100%;">
+  <b-container
+    fluid
+    class="p-0"
+    style="background-color: #2e3136; min-height:100%;"
+  >
     <div v-if="!requeteResult" style="color:red;">Pas d'images à afficher</div>
     <div v-if="dataImgur && dataImgur.length > 0">
       <b-row class="align-items-center justify-content-center">
@@ -43,7 +47,12 @@
               : 6
         "
       >
-        <b-icon icon="chevron-down" variant="light" scale="4" class="chIcon"></b-icon>
+        <b-icon
+          icon="chevron-down"
+          variant="light"
+          scale="4"
+          class="chIcon"
+        ></b-icon>
       </div>
       <div
         class="pb-3 pt-3 w-100 h-100 chevron rounded"
@@ -51,12 +60,18 @@
         v-if="nbImgToDisplay >= dataImgur.length"
         @click="nbImgToDisplay = 6"
       >
-        <b-icon icon="chevron-up" variant="light" scale="4" class="chIcon"></b-icon>
+        <b-icon
+          icon="chevron-up"
+          variant="light"
+          scale="4"
+          class="chIcon"
+        ></b-icon>
       </div>
     </b-col>
   </b-container>
 </template>
 <script>
+import { APIKEY } from "../apiKeys.js";
 const axios = require("axios");
 var requete = true;
 /*
@@ -166,7 +181,7 @@ export default {
           "?q=" +
           this.search,
         {
-          headers: { Authorization: "Client-ID dcb84f674e5a514" }
+          headers: { Authorization: "Client-ID " + APIKEY.imgur }
         }
       );
       //console.log(response);
