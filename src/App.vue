@@ -2,18 +2,21 @@
   <div id="app">
     <!-- Imgur -->
     <b-container fluid class="p-0" style="height:500px; margin-top: 50px;">
-      <Imgur search="csgo" :heightImg="20" />
+      <Imgur search="csgo" :heightImg="20" style="display:none;" />
+      <DataGraphic />
     </b-container>
   </div>
 </template>
 
 <script>
 import Imgur from "./components/Imgur.vue";
+import DataGraphic from "./components/DataGraphic.vue";
 
 export default {
   name: "App",
   components: {
-    Imgur
+    Imgur,
+    DataGraphic
   }
 };
 </script>
