@@ -1,6 +1,6 @@
 <template>
   <b-container fluid class="p-0 w-100 h-100" style="background-color: #2e3136;">
-    <h1 style="color:white;">Graphique Trop Bien</h1>
+    <h1 style="color:white;">Statistiques et Courbes Twitch</h1>
     <div id="chart-container">
       <fusioncharts
         :type="type"
@@ -28,15 +28,15 @@ let schema = [
   }
 ];
 let dataSource = {
+  data: null,
   chart: {
-    data: null,
     caption: "Test Fusion Chart",
     subcaption: "Twitch",
     xaxis: "date",
     xaxisname: "Temps",
     yaxis: "viewers",
     yaxisname: "Views",
-    theme: "fusion",
+    theme: "candy",
     lineThickness: "2"
   }
 };
@@ -46,25 +46,16 @@ export default {
       jsonFile: Object,
       chartData: Object,
       renderAt: "chart-container",
-      width: "550",
-      height: "350",
-      type: "line",
+      width: "600",
+      height: "400",
+      type: "timeseries",
       dataFormat: "json",
       dataSource
     };
   },
   methods: {
     getJsonfile() {
-      this.jsonFile = require("../assets/354.json");
-    },
-    getChartData() {
-      /*this.chartData = this.jsonFile["points"];
-      const fusionDataStore = new FusionCharts.DataStore();
-      const fusionTable = fusionDataStore.createDataTable(
-        this.chartData,
-        schema
-      );
-      this.dataSource.data = fusionTable;*/
+      this.jsonFile = require("../assets/21779.json");
     }
   },
   beforeMount: function() {
