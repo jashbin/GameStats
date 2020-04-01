@@ -11,21 +11,22 @@
 
 <template>
   <div id="app">
-    <div class>
-      <input v-model="research" placeholder="Search :" />
-      <button v-on:click="send()" type="button" class="btn btn-primary" name="button">Search</button>
+    <div class="d-flex justify-content-center">
+      <div class="d-flex flex-row" style="width: 25%;">
+        <input class="form-control" v-model="research" placeholder="Search :" />
+        <button v-on:click="send()" type="button" class="btn btn-primary" name="button">Search</button>
+      </div>
     </div>
 
     <!-- Twitch -->
-    <Twitch :search="toSend" />
+    <Twitch :search="toSend" id="twitch" />
 
     <!-- Imgur -->
-    <b-container fluid class="p-0" style="height:500px; margin-top: 50px;">
+    <b-container fluid class="p-0" id="imgur">
       <Imgur :search="toSend" :heightImg="20" />
     </b-container>
 
-    <igdb :search="toSend" />
-
+    <igdb :search="toSend" id="igdb" />
   </div>
 </template>
 
@@ -63,5 +64,19 @@ export default {
   color: #2c3e50;
   padding: 20px;
   background: #202040;
+  /* background: #b030b0; */
+}
+
+#twitch {
+  margin-top: 1%;
+}
+
+#imgur {
+  height: 500px;
+  margin-top: 1%;
+}
+
+#igdb {
+  margin-top: 1%;
 }
 </style>

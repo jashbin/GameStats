@@ -1,9 +1,5 @@
 <template>
-  <b-container
-    fluid
-    class="p-0"
-    style="background-color: #2e3136; min-height:100%;"
-  >
+  <b-container fluid class="p-0" style="background-color: #602080; min-height:100%;">
     <div v-if="!requeteResult" style="color:red;">Pas d'images à afficher</div>
     <div v-if="dataImgur && dataImgur.length > 0">
       <b-row class="align-items-center justify-content-center">
@@ -47,12 +43,7 @@
               : 6
         "
       >
-        <b-icon
-          icon="chevron-down"
-          variant="light"
-          scale="4"
-          class="chIcon"
-        ></b-icon>
+        <b-icon icon="chevron-down" variant="light" scale="3.5" class="chIcon"></b-icon>
       </div>
       <div
         class="pb-3 pt-3 w-100 h-100 chevron rounded"
@@ -60,12 +51,7 @@
         v-if="nbImgToDisplay >= dataImgur.length"
         @click="nbImgToDisplay = 6"
       >
-        <b-icon
-          icon="chevron-up"
-          variant="light"
-          scale="4"
-          class="chIcon"
-        ></b-icon>
+        <b-icon icon="chevron-up" variant="light" scale="3.5" class="chIcon"></b-icon>
       </div>
     </b-col>
   </b-container>
@@ -227,9 +213,9 @@ export default {
 
 <style scoped>
 .chevron:hover {
-  background-color: gray;
+  background-color: #202060;
 }
 .chevron:hover > .chIcon {
-  color: #2e3136 !important;
+  color: #b030b0 !important;
 }
 </style>

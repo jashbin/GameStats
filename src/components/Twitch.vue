@@ -339,9 +339,8 @@ export default {
 
 <style scoped>
 .mainBox {
-  background-color: #202060;
-  /*padding-top: 15px;*/
-  /*padding-bottom: 20px;*/
+  /* background-color: #202060; */
+  background-color: #602080;
   font-family: "Roboto", sans-serif;
   color: white;
 }
@@ -353,11 +352,16 @@ export default {
 }
 
 .cardGame {
-  background-color: #602080;
+  background-color: #202060;
   color: white;
   padding: 6px;
 }
 
+.dropBtn:hover {
+  background-color: #202060;
+  border-radius: 5px;
+  cursor: pointer;
+}
 .dropBtn:hover > .dropIcon {
   color: #b030b0 !important;
 }
