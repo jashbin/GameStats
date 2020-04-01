@@ -7,14 +7,19 @@
 @Last modified time: 01-Apr-2020
 -->
 
-
-
 <template>
   <div id="app">
     <div class="d-flex justify-content-center">
       <div class="d-flex flex-row" style="width: 25%;">
         <input class="form-control" v-model="research" placeholder="Search :" />
-        <button v-on:click="send()" type="button" class="btn btn-primary" name="button">Search</button>
+        <button
+          v-on:click="send()"
+          type="button"
+          class="btn btn-primary"
+          name="button"
+        >
+          Search
+        </button>
       </div>
     </div>
 
