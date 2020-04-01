@@ -8,17 +8,31 @@
           class="img-fluid"
         />
       </div>
-      <div v-if="streams.length > 0" id="title" class="ml-2">Top Streams</div>
+      <div v-if="streams.length > 0 && search != ''" id="title" class="ml-2">Top Streams</div>
       <div v-else id="title" class="ml-2">Top Streamed Games</div>
     </div>
 
     <div
       ref="mainBox"
       class="d-flex flex-wrap justify-content-center align-items-center"
-      v-if="search.length > 0"
+      v-if="hasResult == false"
+    >
+      <h1>Aucun Résultat</h1>
+    </div>
+    <div
+      ref="mainBox"
+      class="d-flex flex-wrap justify-content-center align-items-center"
+      v-else-if="search.length > 0"
     >
       <div class v-for="(stream) in streams.slice(0,imgToDisplay)" :key="stream.id">
-        <TwitchStreamsCard :title="stream.title" :url_img="stream.thumbnail_url"></TwitchStreamsCard>
+        <TwitchStreamsCard
+          :title="stream.title"
+          :url_img="stream.thumbnail_url"
+          :user_id="stream.user_id"
+          :width="imgStreamsWidth"
+          :user_name="stream.user_name"
+          :viewer_count="stream.viewer_count"
+        ></TwitchStreamsCard>
       </div>
     </div>
     <div
@@ -61,7 +75,7 @@ export default {
   props: {
     imgHeightRatio: {
       type: Number,
-      default: 0.3,
+      default: 0.2,
       validator: function(value) {
         return value > 0 && value <= 1;
       }
@@ -85,20 +99,21 @@ export default {
       streams: [],
       imgTopGamesWidth: 143,
       imgTopGamesHeight: 190,
-      imgStreamsWidth: 200,
-      imgStreamsHeight: 150,
+      imgStreamsWidth: 440,
+      imgStreamsHeight: 248,
       imgPerLine: 1,
       imgToDisplay: 1,
       dropdown: false,
       dropdownEnCours: false,
-      nbCard: 0
+      nbCard: 0,
+      hasResult: false
     };
   },
   watch: {
     search: function() {
       if (this.search != "") {
         this.streams = [];
-        this.getStreams(this.initComponent());
+        this.getStreams(this.initComponent);
       } else {
         this.nbCard = this.topGames.length;
         this.initComponent();
@@ -120,7 +135,6 @@ export default {
   },
   methods: {
     getTopGames(callback) {
-      //console.log(APIKEY.twitch);
       axios
         .get("https://api.twitch.tv/helix/games/top", {
           headers: {
@@ -139,9 +153,14 @@ export default {
             });
           });
           this.nbCard = this.topGames.length;
+          this.hasResult = true;
           callback();
+          return 0;
         })
         .catch(error => console.log(error));
+
+      this.hasResult = false;
+      return -1;
     },
     getStreams(callback) {
       axios
@@ -180,6 +199,7 @@ export default {
                 });
               });
               this.nbCard = this.streams.length;
+              this.hasResult = true;
               callback();
               return 0;
             })
@@ -187,83 +207,87 @@ export default {
         })
         .catch(error => console.log(error));
 
+      this.hasResult = false;
       return -1;
     },
     async handleResize() {
-      /*this.window.width = this.$refs.mainBox.parentNode.clientWidth;
+      if (this.hasResult && this.dropdown == false) {
+        /*this.window.width = this.$refs.mainBox.parentNode.clientWidth;
       this.window.height = this.$refs.mainBox.parentNode.clientHeight;*/
 
-      // Resize img Top Games
-      let imgNewHeight = Math.round(window.innerHeight * this.imgHeightRatio);
-      let imgNewWidth = Math.round(
-        (imgNewHeight * this.imgTopGamesWidth) / this.imgTopGamesHeight
-      );
-      console.log(imgNewWidth + "x" + imgNewHeight);
-
-      for (let i = 0; i < this.topGames.lenght; i++) {
-        let newValue = this.topGames[i];
-        newValue.box_art_url = newValue.box_art_url.replace(
-          this.imgTopGamesWidth + "x" + this.imgTopGamesHeight,
-          imgNewWidth + "x" + imgNewHeight
+        // Resize img Top Games
+        let imgNewHeight = Math.round(window.innerHeight * this.imgHeightRatio);
+        let imgNewWidth = Math.round(
+          (imgNewHeight * this.imgTopGamesWidth) / this.imgTopGamesHeight
         );
-        this.topGames.splice(i, 1, newValue);
-      }
-      this.imgTopGamesWidth = imgNewWidth;
-      this.imgTopGamesHeight = imgNewHeight;
+        //console.log(imgNewWidth + "x" + imgNewHeight);
 
-      //Resize img Streams
-      if (this.search != "") {
-        imgNewWidth = Math.round(
-          (imgNewHeight * this.imgStreamsWidth) / this.imgStreamsHeight
-        );
-        console.log(imgNewWidth + "x" + imgNewHeight);
-
-        for (let i = 0; i < this.streams.lenght; i++) {
-          let newValue = this.streams[i];
-          newValue.thumbnail_url = newValue.thumbnail_url.replace(
-            this.imgStreamsWidth + "x" + this.imgStreamsHeight,
+        for (let i = 0; i < this.topGames.lenght; i++) {
+          let newValue = this.topGames[i];
+          newValue.box_art_url = newValue.box_art_url.replace(
+            this.imgTopGamesWidth + "x" + this.imgTopGamesHeight,
             imgNewWidth + "x" + imgNewHeight
           );
-          this.streams.splice(i, 1, newValue);
+          this.topGames.splice(i, 1, newValue);
         }
-        this.imgStreamsWidth = imgNewWidth;
-        this.imgStreamsHeight = imgNewHeight;
-      }
+        this.imgTopGamesWidth = imgNewWidth;
+        this.imgTopGamesHeight = imgNewHeight;
 
-      //Calculate nb Card to display
-      this.imgPerLine = 1;
-      this.imgToDisplay = this.imgPerLine;
-      await this.$nextTick(function() {});
-      await this.sleep(5);
+        //Resize img Streams
+        if (this.search != "") {
+          imgNewWidth = Math.round(
+            (imgNewHeight * this.imgStreamsWidth) / this.imgStreamsHeight
+          );
+          //console.log(imgNewWidth + "x" + imgNewHeight);
 
-      let startHeight = this.$refs.mainBox.clientHeight;
-      while (
-        this.$refs.mainBox.clientHeight <= startHeight &&
-        this.imgPerLine < this.nbCard
-      ) {
-        console.log(
-          "Avant : img : " +
-            this.imgPerLine +
-            " / " +
-            this.$refs.mainBox.clientHeight +
-            " : " +
-            startHeight
-        );
-        this.imgPerLine++;
+          for (let i = 0; i < this.streams.lenght; i++) {
+            let newValue = this.streams[i];
+            newValue.thumbnail_url = newValue.thumbnail_url.replace(
+              this.imgStreamsWidth + "x" + this.imgStreamsHeight,
+              imgNewWidth + "x" + imgNewHeight
+            );
+            this.streams.splice(i, 1, newValue);
+          }
+          this.imgStreamsWidth = imgNewWidth;
+          this.imgStreamsHeight = imgNewHeight;
+        }
+
+        //Calculate nb Card to display
+        this.nbCard = 10;
+        this.imgPerLine = 1;
         this.imgToDisplay = this.imgPerLine;
         await this.$nextTick(function() {});
         await this.sleep(5);
-        console.log(
-          "Après : img : " +
-            this.imgPerLine +
-            " / " +
-            this.$refs.mainBox.clientHeight +
-            " : " +
-            startHeight
-        );
+
+        let startHeight = this.$refs.mainBox.clientHeight;
+        while (
+          this.$refs.mainBox.clientHeight <= startHeight &&
+          this.imgPerLine < this.nbCard
+        ) {
+          /*console.log(
+            "Avant : img : " +
+              this.imgPerLine +
+              " / " +
+              this.$refs.mainBox.clientHeight +
+              " : " +
+              startHeight
+          );*/
+          this.imgPerLine++;
+          this.imgToDisplay = this.imgPerLine;
+          await this.$nextTick(function() {});
+          await this.sleep(5);
+          /*console.log(
+            "Après : img : " +
+              this.imgPerLine +
+              " / " +
+              this.$refs.mainBox.clientHeight +
+              " : " +
+              startHeight
+          );*/
+        }
+        this.imgPerLine -= 1;
+        this.imgToDisplay = this.imgPerLine;
       }
-      this.imgPerLine -= 1;
-      this.imgToDisplay = this.imgPerLine;
     },
     displayGames() {
       if (!this.dropdownEnCours) {
@@ -273,7 +297,7 @@ export default {
           if (this.dropdown == true) {
             this.imgToDisplay = this.imgPerLine;
           } else {
-            console.log(this.imgPerLine);
+            //console.log(this.imgPerLine);
             this.imgToDisplay = this.nbCard;
           }
 
@@ -304,9 +328,9 @@ export default {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
     async initComponent() {
-      await this.sleep(500);
+      await this.sleep(200);
       this.handleResize();
-      await this.sleep(500);
+      await this.sleep(700);
       this.handleResize();
     }
   }

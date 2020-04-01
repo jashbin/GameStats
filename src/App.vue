@@ -4,7 +4,7 @@
       <input v-model="research" placeholder="Search :" />
       <button v-on:click="send()" type="button" name="button">Search</button>
     </div>
-    <Twitch :withAnimation="true" :search="toSend" />
+    <Twitch :search="toSend" />
   </div>
 </template>
 
