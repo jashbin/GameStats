@@ -1,9 +1,6 @@
 <template>
-  <b-container fluid class="p-0 w-100 h-100" style="background-color: #2e3136;">
-    <b-col
-      class="pt-2 pb-2 d-flex justify-content-center"
-      style="border-bottom: 3px solid white;"
-    >
+  <b-container fluid class="p-0 w-100 h-100" style="background-color: #602080;">
+    <b-col class="pt-2 pb-2 d-flex justify-content-center" style="border-bottom: 3px solid white;">
       <!-- Options de recherche -->
       <b-button-toolbar>
         <b-dropdown id="dropdown" :text="'Sort by ' + sortChoice + ' '">
@@ -11,20 +8,14 @@
             v-for="sort in sortOptions"
             :key="sort"
             @click="sortChoice = sort"
-            >{{ sort }}</b-dropdown-item
-          >
+          >{{ sort }}</b-dropdown-item>
         </b-dropdown>
-        <b-dropdown
-          id="dropdown"
-          :text="'of ' + dateChoice + ' '"
-          v-show="sortChoice == 'top'"
-        >
+        <b-dropdown id="dropdown" :text="'of ' + dateChoice + ' '" v-show="sortChoice == 'top'">
           <b-dropdown-item
             v-for="date in dateOptions"
             :key="date"
             @click="dateChoice = date"
-            >{{ date }}</b-dropdown-item
-          >
+          >{{ date }}</b-dropdown-item>
         </b-dropdown>
       </b-button-toolbar>
       <!-- Changement de page -->
