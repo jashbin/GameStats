@@ -25,8 +25,11 @@
     <b-container fluid class="p-0" id="imgur">
       <Imgur :search="toSend" :heightImg="20" />
     </b-container>
+    <div class="d-flex justify-content-between">
+        <igdb :search="toSend" id="igdb" />
+        <Trend :search="toSend" id="trend" />
+    </div>
 
-    <igdb :search="toSend" id="igdb" />
   </div>
 </template>
 
@@ -34,12 +37,14 @@
 import Twitch from "./components/Twitch.vue";
 import Imgur from "./components/Imgur.vue";
 import Igdb from "./components/IGDB.vue";
+import Trend from "./components/Trend.vue";
 export default {
   name: "App",
   components: {
     Twitch,
     Imgur,
-    Igdb
+    Igdb,
+    Trend
   },
   data() {
     return {
@@ -78,5 +83,10 @@ export default {
 
 #igdb {
   margin-top: 1%;
+}
+
+#trend {
+  margin-top: 1%;
+  margin-left: 1%;
 }
 </style>
