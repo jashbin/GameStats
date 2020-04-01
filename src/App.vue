@@ -2,8 +2,8 @@
   <div id="app">
     <!-- Imgur -->
     <b-container fluid class="p-0" style="height:500px; margin-top: 50px;">
-      <Imgur search="csgo" :heightImg="20" style="display:none;" />
-      <DataGraphic />
+      <Imgur search="csgo" :heightImg="20" />
+      <DataGraphic search="league of legends" />
     </b-container>
   </div>
 </template>
