@@ -55,7 +55,7 @@ export default {
       description: "",
       imageUrl: "",
       load: false,
-      apiUrl: 'http://localhost:3001/games/',
+      apiUrl: 'http://localhost:3000/games/',
     }
   },
   methods: {
