@@ -7,7 +7,7 @@
 @Last modified time: 01-Apr-2020
 -->
 <template lang="html">
-  <b-col class="p-3 w-100" style="background-color: #202060; color: white; height: 430px">
+  <b-col class="p-3 w-100" style="background-color: #602080; color: white; height: 430px">
     <b-spinner v-show="!load" variant="danger" label="Spinning"></b-spinner>
     <b-col class="" v-show="load" >
         <b-row class="mb-3 flex-nowrap" style="height: 90px; font-size: 0.8m;">
@@ -55,6 +55,7 @@ export default {
       description: "",
       imageUrl: "",
       load: false,
+      apiUrl: 'http://localhost:3001/games/',
     }
   },
   methods: {
@@ -76,31 +77,31 @@ export default {
         });
     },
     async getGame(name, callback){
-      await this.sendToLocalApi('http://localhost:3000/games/games/',
+      await this.sendToLocalApi(this.apiUrl + 'games/',
         'fields *; search "'+ name +'"; limit 100;',
         callback
       );
     },
     async getCoverGame(id, callback){
-      await this.sendToLocalApi('http://localhost:3000/games/covers/',
+      await this.sendToLocalApi(this.apiUrl + 'covers/',
                   'fields *; where id = '+id+' ;',
                   callback)
     },
     async getEngine(id, callback){
-      await this.sendToLocalApi('http://localhost:3000/games/game_engines/',
+      await this.sendToLocalApi(this.apiUrl + 'game_engines/',
                           'fields *; where id = ' + id + ';',
                           callback);
           },
 
     async getGenre(id, callback){
       this.genres = []
-      await this.sendToLocalApi('http://localhost:3000/games/genres/',
+      await this.sendToLocalApi(this.apiUrl + 'genres/',
                   'fields *; where id = ' + id + ';',
                   callback);
     },
     async getTheme(id, callback){
       this.theme = []
-      await this.sendToLocalApi('http://localhost:3000/games/themes/',
+      await this.sendToLocalApi(this.apiUrl + 'themes/',
                   'fields *; where id = ' + id + ';',
                   callback);
     },
