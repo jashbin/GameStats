@@ -7,14 +7,19 @@
 @Last modified time: 01-Apr-2020
 -->
 
-
-
 <template>
   <div id="app">
     <div class="d-flex justify-content-center">
       <div class="d-flex flex-row" style="width: 25%;">
         <input class="form-control" v-model="research" placeholder="Search :" />
-        <button v-on:click="send()" type="button" class="btn btn-primary" name="button">Search</button>
+        <button
+          v-on:click="send()"
+          type="button"
+          class="btn btn-primary"
+          name="button"
+        >
+          Search
+        </button>
       </div>
     </div>
 
@@ -26,8 +31,8 @@
       <Imgur :search="toSend" :heightImg="20" />
     </b-container>
     <div class="d-flex justify-content-between">
-        <igdb :search="toSend" id="igdb" />
-        <Trend :search="toSend" id="trend" />
+      <igdb :search="toSend" id="igdb" />
+      <Trend :search="toSend" id="trend" />
     </div>
 
     <!-- Steam -->
@@ -38,7 +43,6 @@
     <div>
       <DataGraphic :search="toSend" id="dataGraphic" />
     </div>
-
   </div>
 </template>
 
@@ -102,5 +106,13 @@ export default {
 #trend {
   margin-top: 1%;
   margin-left: 1%;
+}
+
+#steam {
+  margin-top: 1%;
+}
+
+#dataGraphic {
+  margin-top: 1%;
 }
 </style>

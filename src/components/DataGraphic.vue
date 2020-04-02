@@ -1,19 +1,14 @@
 <template>
-  <b-container fluid class="p-0 w-100 h-100" style="background-color: #2e3136;">
-    <h1 style="color:white;" v-if="gameName && gameName.length > 0">
-      {{ gameName }}
-    </h1>
-    <div id="chart-container">
-      <fusioncharts
-        :type="type"
-        :width="width"
-        :height="height"
-        :dataFormat="dataFormat"
-        :dataSource="dataSource"
-      >
-      </fusioncharts>
-    </div>
-  </b-container>
+  <div>
+    <fusioncharts
+      :type="type"
+      :width="width"
+      :height="height"
+      :dataFormat="dataFormat"
+      :dataSource="dataSource"
+    >
+    </fusioncharts>
+  </div>
 </template>
 
 <script>
@@ -65,8 +60,8 @@ export default {
       jsonFile: Object,
       chartData: Object,
       renderAt: "chart-container",
-      width: "90%",
-      height: "80%",
+      width: "100%",
+      height: "400",
       type: "timeseries",
       dataFormat: "json",
       dataSource,
@@ -78,7 +73,9 @@ export default {
     getJsonfile() {
       //console.log("JSON");
       if (this.gameId >= 0)
-        this.jsonFile = require("../assets/" + this.gameId + ".json");
+        this.jsonFile = require("../assets/gamesStats/" +
+          this.gameId +
+          ".json");
       else this.jsonFile = {};
     },
     drawGraph() {
@@ -95,22 +92,33 @@ export default {
         // After that we simply mutated our timeseries datasource by attaching the above
         // DataTable into its data property.
         this.dataSource.data = fusionTable;
+
+        this.dataSource.caption.text = "Twitch - " + this.gameName;
       });
     },
     idToName() {
-      axios
-        .get("https://api.twitch.tv/helix/games?id=" + this.gameId, {
-          headers: {
-            "Client-ID": APIKEY.twitch
-          }
-        })
-        .then(response => {
-          if (response.data.data[0]) {
-            this.gameName = response.data.data[0].name;
-            //console.log(this.gameName);
-          } else this.gameName = "Top Games";
-        })
-        .catch(error => console.log(error));
+      return new Promise((resolve, reject) => {
+        axios
+          .get("https://api.twitch.tv/helix/games?id=" + this.gameId, {
+            headers: {
+              "Client-ID": APIKEY.twitch
+            }
+          })
+          .then(response => {
+            if (response.data.data[0]) {
+              this.gameName = response.data.data[0].name;
+              //console.log(this.gameName);
+              resolve(this.gameName);
+            } else {
+              this.gameName = "Top Games";
+              reject();
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            reject(error);
+          });
+      });
     },
     nameToId(name) {
       //console.log("nameToId");
@@ -149,8 +157,12 @@ export default {
             this.jsonFile = {};
           })
           .then(() => this.getJsonfile())
-          .then(() => this.drawGraph())
-          .then(() => this.idToName());
+          .then(() => this.idToName())
+          .catch(() => {
+            this.gameName = "Top Games";
+            this.jsonFile = {};
+          })
+          .then(() => this.drawGraph());
         /*return new Promise((resolve, reject) => {
           axios.get(this.apiTool, {
           })
