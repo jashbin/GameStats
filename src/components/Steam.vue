@@ -81,10 +81,8 @@
 
             searchIdGames() {
 
-                this.trouve = false;
-
                 Object.keys(dossierData).forEach( fichier => {
-                    if ( dossierData[fichier].nom_jeu == this.nomJeu ) {
+                    if ( dossierData[fichier].nom_jeu.toLowerCase() == this.nomJeu.toLowerCase() ) {
                         console.log( dossierData[fichier])
                         this.indexH = fichier;
                         this.trouve = true;
@@ -106,7 +104,7 @@
                         );
                         this.dataSource.data = fusionTable;
 
-                        this.dataSource.caption.text = "Nombres de joueurs maximum connecté en même temps sur " + this.nomJeu;
+                        this.dataSource.caption.text = "Nombres de joueurs maximum connecté en même temps sur " + dossierData[this.indexH].nom_jeu;
                     });
                 } else {
                     this.dataSource.data = {};
