@@ -1,33 +1,51 @@
 <template>
   <b-container fluid class="p-0 w-100 h-100" style="background-color: #602080;">
-    <b-col class="pt-2 pb-2 d-flex justify-content-center" style="border-bottom: 3px solid white;">
+    <b-col
+      class="pt-2 pb-2 d-flex justify-content-center"
+      style="border-bottom: 3px solid white;"
+    >
       <!-- Options de recherche -->
       <b-button-toolbar>
-        <b-dropdown id="dropdown" :text="'Sort by ' + sortChoice + ' '">
+        <b-dropdown
+          variant="primary"
+          id="dropdown"
+          :text="'Sort by ' + sortChoice + ' '"
+        >
           <b-dropdown-item
             v-for="sort in sortOptions"
             :key="sort"
             @click="sortChoice = sort"
-          >{{ sort }}</b-dropdown-item>
+            >{{ sort }}</b-dropdown-item
+          >
         </b-dropdown>
-        <b-dropdown id="dropdown" :text="'of ' + dateChoice + ' '" v-show="sortChoice == 'top'">
+        <b-dropdown
+          variant="primary"
+          id="dropdown"
+          :text="'of ' + dateChoice + ' '"
+          v-show="sortChoice == 'top'"
+        >
           <b-dropdown-item
             v-for="date in dateOptions"
             :key="date"
             @click="dateChoice = date"
-          >{{ date }}</b-dropdown-item>
+            >{{ date }}</b-dropdown-item
+          >
         </b-dropdown>
       </b-button-toolbar>
       <!-- Changement de page -->
       <b-button-toolbar key-nav>
         <b-button-group class="mx-1">
-          <b-button @click="pagesPrecedentes">&laquo;</b-button>
-          <b-button @click="pagePrecedente">&lsaquo;</b-button>
+          <b-button variant="primary" @click="pagesPrecedentes"
+            >&laquo;</b-button
+          >
+          <b-button variant="primary" @click="pagePrecedente"
+            >&lsaquo;</b-button
+          >
         </b-button-group>
-        <b-button disabled>{{ page }}</b-button>
+        <b-button variant="primary" disabled>{{ page }}</b-button>
         <b-button-group class="mx-1">
-          <b-button @click="pageSuivante">&rsaquo;</b-button>
-          <b-button @click="pagesSuivantes">&raquo;</b-button>
+          <b-button variant="primary" @click="pageSuivante">&rsaquo;</b-button>
+          <b-button variant="primary" @click="pagesSuivantes">&raquo;</b-button>
         </b-button-group>
       </b-button-toolbar>
     </b-col>
