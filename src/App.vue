@@ -31,10 +31,18 @@
       <Imgur :search="toSend" :heightImg="20" />
     </b-container>
     <div class="d-flex justify-content-between">
-        <igdb :search="toSend" id="igdb" />
-        <Trend :search="toSend" id="trend" />
+      <igdb :search="toSend" id="igdb" />
+      <Trend :search="toSend" id="trend" />
     </div>
 
+    <!-- Steam -->
+    <div>
+      <Steam :nomJeu="toSend" id="steam" />
+    </div>
+
+    <div>
+      <DataGraphic :search="toSend" id="dataGraphic" />
+    </div>
   </div>
 </template>
 
@@ -43,13 +51,18 @@ import Twitch from "./components/Twitch.vue";
 import Imgur from "./components/Imgur.vue";
 import Igdb from "./components/IGDB.vue";
 import Trend from "./components/Trend.vue";
+import Steam from "./components/Steam.vue";
+import DataGraphic from "./components/DataGraphic.vue";
+
 export default {
   name: "App",
   components: {
     Twitch,
     Imgur,
     Igdb,
-    Trend
+    Trend,
+    Steam,
+    DataGraphic
   },
   data() {
     return {
@@ -93,5 +106,13 @@ export default {
 #trend {
   margin-top: 1%;
   margin-left: 1%;
+}
+
+#steam {
+  margin-top: 1%;
+}
+
+#dataGraphic {
+  margin-top: 1%;
 }
 </style>
