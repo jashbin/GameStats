@@ -1,0 +1,8 @@
+[{
+    "name": "Date",
+    "type": "date",
+    "format": "%b %Y"
+}, {
+    "name": "Interet",
+    "type": "number"
+}]
