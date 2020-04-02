@@ -4,7 +4,7 @@
 @Email:  maxence.despres.etu@univ-lemans.fr
 @Filename: IGDB.vue
 @Last modified by:   checkam
-@Last modified time: 01-Apr-2020
+@Last modified time: 02-Apr-2020
 -->
 <template lang="html">
   <b-col class="p-3 w-100" style="background-color: #602080; color: white; height: 430px">
@@ -37,7 +37,9 @@
 </template>
 
 <script>
+import { APIKEY } from "../apiKeys.js";
 var request = require('request');
+const GAMESTAT_KEY = APIKEY.gamestats;
 export default {
   name: "igdb",
   props: {
@@ -59,19 +61,13 @@ export default {
     }
   },
   methods: {
-    async sendRequest(url, body, callback){
-      console.log("Call request : " + url + "\t" + body)
-      await request.post({
-            url: url,
-            body: body,
-          }, function(error, response, resBody){
-                callback(JSON.parse(resBody));
-        });
-    },
     async sendToLocalApi(url, body, callback){
       console.log("Call request : " + url + "\t" + body)
       await request.get({
             url: url+body,
+            headers:{
+              'gamestats-key': GAMESTAT_KEY
+            },
           }, function(error, response, resBody){
                 callback(JSON.parse(resBody));
         });

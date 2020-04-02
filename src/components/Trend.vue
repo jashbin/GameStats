@@ -4,7 +4,7 @@
 @Email:  maxence.despres.etu@univ-lemans.fr
 @Filename: Chart.vue
 @Last modified by:   checkam
-@Last modified time: 01-Apr-2020
+@Last modified time: 02-Apr-2020
 -->
 
 <template>
@@ -27,7 +27,9 @@
   import TimeSeries from 'fusioncharts/fusioncharts.timeseries';
   import schemaFetch from '../assets/schema';
   import AsyncComputed from 'vue-async-computed'
+  import { APIKEY } from "../apiKeys.js";
   const axios = require('axios');
+  const GAMESTAT_KEY = APIKEY.gamestats;
 
   Vue.use(VueFusionCharts, FusionCharts, TimeSeries, CandyTheme );
   Vue.use(AsyncComputed)
@@ -73,7 +75,12 @@
   },
   methods: {
     async get() {
-          return axios.get('http://localhost:3000/api/interestWithoutTime?keyword='+this.search)
+          return axios.get('http://localhost:3000/api/interestWithoutTime?keyword='+this.search,
+          {
+            headers: {
+              "gamestats-key": GAMESTAT_KEY
+            }
+          })
             .then(response => {
               this.jsonText = response.data
             });
