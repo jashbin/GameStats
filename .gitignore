@@ -21,3 +21,4 @@ yarn-error.log*
 *.sw?
 
 apiKeys.js
+src/apiKeys.js
