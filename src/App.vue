@@ -2,18 +2,18 @@
   <div id="app">
     <!-- Imgur -->
     <b-container fluid class="p-0" style="height:500px; margin-top: 50px;">
-      <Imgur search="csgo" :heightImg="20" />
+      <Steam nomJeu="Counter-Strike: Global Offensive"/>
     </b-container>
   </div>
 </template>
 
 <script>
-import Imgur from "./components/Imgur.vue";
+import Steam from "./components/Steam.vue";
 
 export default {
   name: "App",
   components: {
-    Imgur
+    Steam
   }
 };
 </script>
