@@ -30,6 +30,15 @@
         <Trend :search="toSend" id="trend" />
     </div>
 
+    <!-- Steam -->
+    <div>
+      <Steam :nomJeu="toSend" id="steam" />
+    </div>
+
+    <div>
+      <DataGraphic :search="toSend" id="dataGraphic" />
+    </div>
+
   </div>
 </template>
 
@@ -38,13 +47,18 @@ import Twitch from "./components/Twitch.vue";
 import Imgur from "./components/Imgur.vue";
 import Igdb from "./components/IGDB.vue";
 import Trend from "./components/Trend.vue";
+import Steam from "./components/Steam.vue";
+import DataGraphic from "./components/DataGraphic.vue";
+
 export default {
   name: "App",
   components: {
     Twitch,
     Imgur,
     Igdb,
-    Trend
+    Trend,
+    Steam,
+    DataGraphic
   },
   data() {
     return {

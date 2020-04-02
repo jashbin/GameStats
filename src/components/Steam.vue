@@ -19,7 +19,7 @@
         r.keys().forEach(key => dossierData[key] = r(key));
     }
 
-    importAll(require.context('../assets/Steam/dataOrganise/', true, /.json$/));
+    importAll(require.context('../assets/SteamData/', true, /.json$/));
 
     let schema = [{
         name: "date",
@@ -43,6 +43,7 @@
 
         data() {
             return { 
+                trouve: false,
                 indexH: "",
                 jsonFile: Object,
                 width: "100%",
@@ -50,7 +51,7 @@
                 type: "timeseries",
                 dataFormat: "json",
                 dataSource: {
-                    caption: { text: "Nombres de joueurs maximum connecté en même temps sur " + this.nomJeu },
+                    caption: { text: "Nombres de joueurs maximum connecté en même temps sur " },
                     data: null,
                     chart: {
                         showLegend: 0,
@@ -68,35 +69,48 @@
                 }
             }
         },
-
-        mounted: function() {
-            this.searchIdGames();
-            Promise.all([dossierData[this.indexH].points, schema]).then(res => {
-                const data = res[0];
-                const schema = res[1];
-                const fusionTable = new FusionCharts.DataStore().createDataTable(
-                data,
-                schema
-                );
-                this.dataSource.data = fusionTable;
-            });
-        },
-
-        beforeMount: function() {
-
-            this.jsonFile = require("../assets/Steam/dataOrganise/730.json");
+        
+        watch: {
+            nomJeu: function(){
+                this.searchIdGames();
+                this.searchGame();
+            }
         },
 
         methods: {
 
             searchIdGames() {
 
+                this.trouve = false;
+
                 Object.keys(dossierData).forEach( fichier => {
                     if ( dossierData[fichier].nom_jeu == this.nomJeu ) {
                         console.log( dossierData[fichier])
                         this.indexH = fichier;
+                        this.trouve = true;
                     }
                 })
+
+                if ( this.trouve == false )
+                    this.indexH = "";
+            },
+
+            searchGame() {
+                if ( this.trouve == true ) {
+                    Promise.all([dossierData[this.indexH].points, schema]).then(res => {
+                        const data = res[0];
+                        const schema = res[1];
+                        const fusionTable = new FusionCharts.DataStore().createDataTable(
+                        data,
+                        schema
+                        );
+                        this.dataSource.data = fusionTable;
+
+                        this.dataSource.caption.text = "Nombres de joueurs maximum connecté en même temps sur " + this.nomJeu;
+                    });
+                } else {
+                    this.dataSource.data = {};
+                }
             }
         }
     }
