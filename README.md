@@ -1,4 +1,4 @@
-# gamestats
+# GameStats
 
 ## Project setup
 ```
@@ -15,19 +15,13 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
 ### Load API Keys
 Create apiKeys.js and add:
 ```
 export const APIKEY = {
-    twitch: "YOUR_KEY"
+  imgur: 'YOUR KEY',
+  twitch: 'YOUR KEY',
+  gamestats: 'YOUR KEY'
 };
 ```
 
