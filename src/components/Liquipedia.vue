@@ -67,7 +67,7 @@
 
                     console.log( data);
 
-                    if ( data != [] && data.query.meta.count != 0 ) {
+                    if ( data.length != 0 && data.query.meta.count != 0 ) {
 
                         for (let [key, value] of Object.entries(data.query.results)) {
 
@@ -89,11 +89,6 @@
                 this.getInfo()
             }
         }
-
-        /*mounted: function() {
-
-            this.getInfo();
-        }*/
     }
 </script>
 
