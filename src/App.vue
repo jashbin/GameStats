@@ -40,9 +40,18 @@
       <Steam :nomJeu="toSend" id="steam" />
     </div>
 
+    <!-- dataGraphic -->
+
     <div>
       <DataGraphic :search="toSend" id="dataGraphic" />
     </div>
+
+    <!-- Liquipedia -->
+
+    <div>
+      <Liquipedia :nomJeu="toSend" id="Liquipedia" />
+    </div>
+
   </div>
 </template>
 
@@ -53,6 +62,7 @@ import Igdb from "./components/IGDB.vue";
 import Trend from "./components/Trend.vue";
 import Steam from "./components/Steam.vue";
 import DataGraphic from "./components/DataGraphic.vue";
+import Liquipedia from "./components/Liquipedia.vue";
 
 export default {
   name: "App",
@@ -62,7 +72,8 @@ export default {
     Igdb,
     Trend,
     Steam,
-    DataGraphic
+    DataGraphic,
+    Liquipedia
   },
   data() {
     return {
