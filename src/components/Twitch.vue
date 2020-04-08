@@ -253,7 +253,7 @@ export default {
         }
 
         //Calculate nb Card to display
-        this.nbCard = 10;
+        //this.nbCard = 10;
         this.imgPerLine = 1;
         this.imgToDisplay = this.imgPerLine;
         await this.$nextTick(function() {});
