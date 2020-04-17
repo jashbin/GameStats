@@ -252,7 +252,7 @@ export default {
           this.imgStreamsHeight = imgNewHeight;
         }
 
-        //Calculate nb Card to display
+        //Calculate nb Card to display for 1 line
         //this.nbCard = 10;
         this.imgPerLine = 1;
         this.imgToDisplay = this.imgPerLine;
@@ -290,6 +290,7 @@ export default {
       }
     },
     displayGames() {
+      // Display cards
       if (!this.dropdownEnCours) {
         this.dropdownEnCours = true;
 

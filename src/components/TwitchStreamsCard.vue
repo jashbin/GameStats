@@ -87,6 +87,7 @@ export default {
       return new Promise(resolve => setTimeout(resolve, ms));
     },
     getUser() {
+      // Get user infos from Twitch
       this.user = [];
       axios
         .get("https://api.twitch.tv/helix/users?id=" + this.user_id, {
